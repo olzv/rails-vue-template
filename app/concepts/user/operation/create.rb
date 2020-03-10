@@ -1,4 +1,4 @@
-class User::Create < Trailblazer::Operation
+class User::Operation::Create < Trailblazer::Operation
   step Model(User, :new)
   step Contract::Build(constant: User::Contract::Create)
   step Contract::Validate(key: :user)

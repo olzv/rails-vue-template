@@ -1,4 +1,4 @@
-class User::List < Trailblazer::Operation
+class User::Operation::List < Trailblazer::Operation
   step :model!
 
   def model!(options, *)

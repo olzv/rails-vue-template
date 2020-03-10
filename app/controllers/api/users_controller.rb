@@ -2,13 +2,17 @@ module Api
   class UsersController < ApplicationController
 
     def index
-      run User::List
+      run User::Operation::List
 
       render json: @model
     end
 
+    def update
+
+    end
+
     def create
-      run User::Create
+      run User::Operation::Create
 
       render json: @model
     end
