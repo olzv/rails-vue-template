@@ -3,7 +3,7 @@
         <div>List:</div>
         <ul>
             <li v-for="user of users">
-                {{user.firstname}} {{user.lastname}} ({{user.email}})
+                {{user.first_name}} {{user.last_name}} ({{user.email}})
             </li>
         </ul>
     </div>
@@ -20,7 +20,7 @@
         },
         mounted () {
             axios
-                .get('api/users')
+                .get('api/v1/users')
                 .then(response => {
                     this.users = response.data
                 })

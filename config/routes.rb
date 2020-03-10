@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root controller: :landing, action: :index
 
   namespace :api do
-    resources :users
+    namespace :v1 do
+      resources :users
+    end
   end
 
   get '*path', controller: :landing, action: :index

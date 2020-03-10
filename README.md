@@ -8,3 +8,7 @@ Features:
 - proper routes configuration to allow vue's routes history mode
 - includes Trailblazer
 - axios for api fetching
+- trailblazer loader disabled and using rails loader instead
+- rspec
+- factory bot
+- faker
