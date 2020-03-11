@@ -22,4 +22,37 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "POST /api/v1/users" do
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name)  { Faker::Name.last_name }
+    let(:email)      { Faker::Internet.email }
+
+    let(:params) {
+      {
+          user: {
+              first_name: first_name,
+              last_name:  last_name,
+              email:      email
+          }
+      }
+    }
+    let(:call_endpoint) { post api_v1_users_path, params: params }
+
+
+    it "returns 200" do
+      call_endpoint
+      expect(response).to have_http_status(200)
+    end
+
+    it "creates user" do
+      expect { call_endpoint }.to change{
+        User.where(
+           first_name: first_name,
+           last_name:  last_name,
+           email:      email
+        ).count
+      }.by(1)
+    end
+  end
 end
