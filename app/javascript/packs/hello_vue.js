@@ -5,9 +5,13 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
-import Vue from 'vue'
-import App from '../app.vue'
-import router from '../config/router'
+import Vue          from 'vue'
+import App          from '../app.vue'
+import router       from '../config/router'
+import VueFormulate from '@braid/vue-formulate'
+import SuiVue       from 'semantic-ui-vue';
+
+import 'semantic-ui-css/semantic.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
@@ -18,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log(app)
 })
+
+Vue.use(VueFormulate)
+Vue.use(SuiVue)
 
 
 // The above code uses Vue without the compiler, which means you cannot

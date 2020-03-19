@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="ui main text container">
 
     <router-view></router-view>
 
@@ -28,8 +28,7 @@
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
+  .main.container {
+    margin-top: 2em;
+  }
 </style>

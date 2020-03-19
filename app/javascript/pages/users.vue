@@ -6,11 +6,14 @@
                 {{user.first_name}} {{user.last_name}} ({{user.email}})
             </li>
         </ul>
+        <br>
+        <create></create>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import create from '../components/users/create'
 
     export default {
         data () {
@@ -24,6 +27,9 @@
                 .then(response => {
                     this.users = response.data
                 })
+        },
+        components: {
+            create
         }
     }
 </script>
