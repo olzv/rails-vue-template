@@ -1,0 +1,41 @@
+# Created by https://github.com/olzv
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        bundle_on_build: "false"
+    ports:
+      - 3000:3000
+      - 1234:1234
+    depends_on:
+      - postgres
+    environment:
+      DRY_RUN:          ${DRY_RUN:-false}
+      MIGRATE_ON_START: ${MIGRATE_ON_START:-true}
+      PGHOST:           ${PGHOST:-postgres}
+      PGUSER:           ${PGUSER:-postgres}
+      PGPASSWORD:       ${PGASSWORD:-secret}
+      DB_NAME_PREFIX:   ${DB_NAME_PREFIX:-rails_vue}
+      RAILS_ENV:        ${RAILS_ENV:-development}
+
+      BUNDLE_PATH:       /usr/src/app/vendor/bundle
+      GEM_PATH:          /usr/src/app/vendor/bundle
+      GEM_HOME:          /usr/src/app/vendor/bundle
+      BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+    volumes:
+      - ./:/usr/src/app
+      - ./vendor/bundle:/usr/src/app/vendor/bundle
+    command: bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -b 0.0.0.0
+
+  postgres:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    volumes:
+      - "./data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_PASSWORD=secret
+      - PGDATA=/var/lib/postgresql/data/pgdata
