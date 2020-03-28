@@ -2,9 +2,9 @@
 version: '3'
 
 services:
-  app: &app
+  app:
     stdin_open: true
-    build:
+    build: &app_build
       context: .
       args:
         bundle_on_build: "false"
@@ -13,8 +13,8 @@ services:
       - 1234:1234
     depends_on:
       - postgres
-      - webpack_dev_server
-    environment:
+#      - webpack_dev_server
+    environment: &app_env
       DRY_RUN:          ${DRY_RUN:-false}
       MIGRATE_ON_START: ${MIGRATE_ON_START:-true}
       PGHOST:           ${PGHOST:-postgres}
@@ -31,14 +31,22 @@ services:
       - ./vendor/bundle:/usr/src/app/vendor/bundle
     tmpfs:
       - /usr/src/app/tmp/
-#    command: bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -b 0.0.0.0
+    command: bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -b 0.0.0.0
 
   webpack_dev_server:
-    <<: *app
+    build:
+      <<: *app_build
+    environment:
+      <<: *app_env
     ports:
       - 3035:3035
-    depends_on: []
-    command: ./bin/webpack-dev-server --listen-host 0.0.0.0
+    volumes:
+      - ./:/usr/src/app:delegated
+      - ./vendor/bundle:/usr/src/app/vendor/bundle
+    depends_on:
+      - app
+    entrypoint: webpack-dev-server-entrypoint.sh
+    command: ./bin/webpack-dev-server
 
   postgres:
     image: postgres:12

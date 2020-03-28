@@ -18,6 +18,9 @@ WORKDIR /usr/src/app
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
+COPY webpack-dev-server-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/webpack-dev-server-entrypoint.sh
+
 COPY Gemfile Gemfile.lock ./
 ARG bundle_on_build
 
