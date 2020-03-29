@@ -17,5 +17,6 @@ module TreadsPlayground
     # the framework and any gems in your application.
 
     config.trailblazer.enable_loader = false
+    config.hosts << "app"
   end
 end

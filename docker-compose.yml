@@ -3,7 +3,8 @@ version: '3'
 
 services:
   app:
-    build:
+    stdin_open: true
+    build: &app_build
       context: .
       args:
         bundle_on_build: "false"
@@ -12,7 +13,8 @@ services:
       - 1234:1234
     depends_on:
       - postgres
-    environment:
+#      - webpack_dev_server
+    environment: &app_env
       DRY_RUN:          ${DRY_RUN:-false}
       MIGRATE_ON_START: ${MIGRATE_ON_START:-true}
       PGHOST:           ${PGHOST:-postgres}
@@ -22,13 +24,29 @@ services:
       RAILS_ENV:        ${RAILS_ENV:-development}
 
       BUNDLE_PATH:       /usr/src/app/vendor/bundle
-      GEM_PATH:          /usr/src/app/vendor/bundle
-      GEM_HOME:          /usr/src/app/vendor/bundle
+      GEM_HOME:          /usr/src/app/vendor/bundle/ruby/2.6.0
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
     volumes:
-      - ./:/usr/src/app
+      - ./:/usr/src/app:delegated
       - ./vendor/bundle:/usr/src/app/vendor/bundle
+    tmpfs:
+      - /usr/src/app/tmp/
     command: bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -b 0.0.0.0
+
+  webpack_dev_server:
+    build:
+      <<: *app_build
+    environment:
+      <<: *app_env
+    ports:
+      - 3035:3035
+    volumes:
+      - ./:/usr/src/app:delegated
+      - ./vendor/bundle:/usr/src/app/vendor/bundle
+    depends_on:
+      - app
+    entrypoint: webpack-dev-server-entrypoint.sh
+    command: ./bin/webpack-dev-server
 
   postgres:
     image: postgres:12

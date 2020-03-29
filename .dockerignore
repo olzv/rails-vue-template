@@ -1,3 +1,5 @@
 /vendor/bundle
 /node_modules
 /data
+/tmp
+/public/packs
