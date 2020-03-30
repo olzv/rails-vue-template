@@ -2,7 +2,6 @@
   "name": "treads_playground",
   "private": true,
   "dependencies": {
-    "@braid/vue-formulate": "^2.2.3",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
