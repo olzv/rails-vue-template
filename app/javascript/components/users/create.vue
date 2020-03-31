@@ -93,11 +93,14 @@
                 )
                 .then( response => {
                     this.isSuccess = true
+                    this.$emit('user-created', Object.assign({}, this.user))
                     this.clearFormFields()
                 })
                 .catch((error) => {
                     this.isError = true
-                    if (!(this.errorMessages = error.response && error.response.data && error.response.data.errors)) {
+
+                    const { response: { data: { errors: errorMessages } } } = error
+                    if (!(this.errorMessages = errorMessages)) {
                         throw error
                     }
                 })

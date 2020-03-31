@@ -9,7 +9,8 @@ environment.config.merge({
             '@node_modules': path.resolve(__dirname, '..', '..', 'node_modules'),
             '@':             path.resolve(__dirname, '..', '..', 'app/javascript'),
             '@pages':        path.resolve(__dirname, '..', '..', 'app/javascript/pages'),
-            '@components':   path.resolve(__dirname, '..', '..', 'app/javascript/components')
+            '@components':   path.resolve(__dirname, '..', '..', 'app/javascript/components'),
+            '@models':       path.resolve(__dirname, '..', '..', 'app/javascript/models')
         }
     }
 })
