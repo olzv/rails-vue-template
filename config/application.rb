@@ -18,5 +18,6 @@ module TreadsPlayground
 
     config.trailblazer.enable_loader = false
     config.hosts << "app"
+    config.trailblazer.enable_tracing = true
   end
 end

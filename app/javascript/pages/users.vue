@@ -1,29 +1,34 @@
 <template>
     <div>
-        <div>List:</div>
-        <ul>
-            <li v-for="user of users">
-                {{user.first_name}} {{user.last_name}} ({{user.email}})
-            </li>
-        </ul>
+        {{ lastCreatedUser }}
+        <create v-on:user-created="onUserCreated"></create>
+        <br>
+        <list :key="lastCreatedUser.first_name"></list>
     </div>
 </template>
 
 <script>
-    import axios from 'axios'
+    import create from '@components/users/create'
+    import list from '@components/users/list'
 
     export default {
-        data () {
+        components: {
+            create,
+            list
+        },
+
+        data() {
             return {
-                users: []
+                lastCreatedUser: {
+                    first_name: null
+                }
             }
         },
-        mounted () {
-            axios
-                .get('api/v1/users')
-                .then(response => {
-                    this.users = response.data
-                })
+
+        methods: {
+            onUserCreated(user) {
+                this.lastCreatedUser = user;
+            }
         }
     }
 </script>

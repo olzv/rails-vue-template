@@ -13,7 +13,7 @@ module Api
       end
 
       def create
-        run User::Operation::Create
+        result = run User::Operation::Create
 
         render json: @model
       end

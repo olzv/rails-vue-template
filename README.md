@@ -50,4 +50,4 @@ To run the app from scratch (reinstalls gems, node modules and recreates db):
 - rspec
 - factory bot
 - faker
-
+- vue formulate
